@@ -2,10 +2,9 @@ package lesson_3;
 
 import java.util.NoSuchElementException;
 
-public class MyStack<E> {
-
+public class MyQueue<E> {
     private int size;
-    private Object[] stack = new Object[1];
+    private Object[] queue = new Object[1];
 
     public boolean isEmpty(){
         return size == 0;
@@ -13,10 +12,10 @@ public class MyStack<E> {
 
     private void resize(int capacity) {
         Object[] temp = new Object[capacity];
-        for (int i = 0; i < stack.length; i++) {
-            temp[i] = stack[i];
+        for (int i = 0; i < size; i++) {
+            temp[i] = queue[i];
         }
-        stack = temp;
+        queue = temp;
     }
 
     public int getSize(){
@@ -24,34 +23,39 @@ public class MyStack<E> {
     }
 
 
-    public void push(E element){
-        if(size == stack.length){
-            resize(2 * stack.length);
+    public void enqueue(E element){
+        if(size == queue.length){
+            resize(2 * queue.length);
         }
 
-        stack[size++] = element;
+        queue[size++] = element;
     }
 
-    public E pop(){
+    public E dequeue(){
         if(isEmpty()){
             throw new NoSuchElementException();
         }
 
-        E element = (E) stack[size - 1];
-        stack[size - 1] = null;
+        E element = (E) queue[0];
+
+        Object[] temp = new Object[size - 1];
+        for(int i = 1; i < size; i++){
+            temp[i-1] = queue[i];
+        }
+        queue = temp;
         size--;
-        if(size > 0 && size == stack.length/4){
-            resize(stack.length / 2);
+        if(size > 0 && size == queue.length/4){
+            resize(queue.length / 2);
         }
 
         return element;
     }
 
-    public E peek(){
+    public E peekFront(){
         if(isEmpty()){
             throw new NoSuchElementException();
         }
-        return (E) stack[size - 1];
+        return (E) queue[0];
     }
 
 
@@ -59,7 +63,7 @@ public class MyStack<E> {
     public String toString(){
         String s = "";
         for (int i = 0; i < size; i++){
-            s = s + " " +stack[i];
+            s = s + " " + queue[i];
         }
         return s;
     }
