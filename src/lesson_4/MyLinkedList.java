@@ -66,7 +66,8 @@ public class MyLinkedList<E> implements Iterable<E> {
         }
         E item = first.item;
         first = first.next;
-        first.previous = null;
+        //в стеке при удалении последнего элемента обнаружилась ошибка с null
+        if (first != null) first.previous = null;
         size--;
         if (isEmpty()) {
             last = null;

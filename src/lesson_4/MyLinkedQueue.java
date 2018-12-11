@@ -1,13 +1,13 @@
 package lesson_4;
 
-public class MyLinkedQueue<Item> {
-    private MyLinkedList<Item> queue = new MyLinkedList<>();
+public class MyLinkedQueue<E> {
+    private MyLinkedList<E> queue = new MyLinkedList<>();
 
-    public void enquue(Item item) {queue.insertLast(item);}
+    public void enquue(E element) {queue.insertLast(element);}
 
-    public Item dequeue() {return queue.deleteFirst();}
+    public E dequeue() {return queue.deleteFirst();}
 
-    public Item peek() {return queue.getFirst();}
+    public E peek() {return queue.getFirst();}
 
     public int size() {return queue.size();}
 
