@@ -1,7 +1,11 @@
 package lesson_3;
 
 import java.util.Stack;
-
+/*
+1. Реализовать рассмотренные структуры данных. Стек, очередь и дек
+2. Создать программу, которая переворачивает вводимые строки(Читает справа налево).
+3. Создать класс для реализации дека
+*/
 public class Main {
     public static void main(String[] args) {
         Stack<Character> stack = new Stack<>();
@@ -45,5 +49,9 @@ public class Main {
         System.out.println(queue.toString());
 
         System.out.println(queue.peekFront());
+
+        //--------------------------- Deque ----------------------------
+
+
     }
 }

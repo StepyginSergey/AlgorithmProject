@@ -3,38 +3,36 @@ package lesson_4;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MyLinkedList<Item> implements Iterable<Item> {
+public class MyLinkedList<E> implements Iterable<E> {
 
-    private class MyLinkedListIterator implements Iterator<Item> {
-
+    private class MyLinkedListIterator implements Iterator<E> {
         private Node current = first;
-
         @Override
         public boolean hasNext() {
             return current != null;
         }
 
         @Override
-        public Item next() {
+        public E next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            Item item = current.item;
+            E item = current.item;
             current = current.next;
             return item;
         }
     }
 
-    public Iterator<Item> iterator() {
+    public Iterator<E> iterator() {
         return new MyLinkedListIterator();
     }
 
     private class Node {
-        Item item;
+        E item;
         Node next;
         Node previous;
 
-        public Node(Item item, Node next, Node previous) {
+        public Node(E item, Node next, Node previous) {
             this.item = item;
             this.next = next;
             this.previous = previous;
@@ -49,7 +47,7 @@ public class MyLinkedList<Item> implements Iterable<Item> {
 
     public boolean isEmpty() {return size == 0;}
 
-    public void insertFirst(Item item) {
+    public void insertFirst(E item) {
         Node oldFirst = first;
         first = new Node(item, oldFirst, null);
         if (isEmpty()) {
@@ -62,11 +60,11 @@ public class MyLinkedList<Item> implements Iterable<Item> {
         size++;
     }
 
-    public Item deleteFirst() {
+    public E deleteFirst() {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
-        Item item = first.item;
+        E item = first.item;
         first = first.next;
         first.previous = null;
         size--;
@@ -76,14 +74,14 @@ public class MyLinkedList<Item> implements Iterable<Item> {
         return item;
     }
 
-    public Item getFirst() {
+    public E getFirst() {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
         return first.item;
     }
 
-    public void insertLast(Item item) {
+    public void insertLast(E item) {
         Node oldLast = last;
         last = new Node(item, null, oldLast);
         if (isEmpty()) {
@@ -95,18 +93,18 @@ public class MyLinkedList<Item> implements Iterable<Item> {
         size++;
     }
 
-    public Item getLast() {
+    public E getLast() {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
         return last.item;
     }
 
-    public Item deleteLast() {
+    public E deleteLast() {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
-        Item item = last.item;
+        E item = last.item;
         Node previous = last.previous;
         last.previous = null;
         last = previous;
@@ -120,7 +118,7 @@ public class MyLinkedList<Item> implements Iterable<Item> {
         return item;
     }
 
-    public Item get(int index) {
+    public E get(int index) {
         if (index < 0 || index > size - 1) {
             throw new IndexOutOfBoundsException();
         }
@@ -133,7 +131,7 @@ public class MyLinkedList<Item> implements Iterable<Item> {
         return current.item;
     }
 
-    public void set(int index, Item item) {
+    public void set(int index, E item) {
         if (index < 0 || index > size - 1) {
             throw new IndexOutOfBoundsException();
         }
@@ -146,7 +144,7 @@ public class MyLinkedList<Item> implements Iterable<Item> {
         current.item = item;
     }
 
-    public boolean find(Item item) {
+    public boolean find(E item) {
         Node current = first;
         while (current != null && !current.item.equals(item)) {
             current = current.next;
@@ -154,7 +152,7 @@ public class MyLinkedList<Item> implements Iterable<Item> {
         return current != null;
     }
 
-    public Item delete(Item item) {
+    public E delete(E item) {
         Node current = first;
 
         while (current != null && !current.item.equals(item)) {
@@ -177,7 +175,7 @@ public class MyLinkedList<Item> implements Iterable<Item> {
         return current.item;
     }
 
-    public void insert(int index, Item item) {
+    public void insert(int index, E item) {
         if (index < 0 || index > size) {
             throw new IllegalArgumentException();
         }

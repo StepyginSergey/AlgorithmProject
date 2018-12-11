@@ -13,7 +13,7 @@ public class MyStack<E> {
 
     private void resize(int capacity) {
         Object[] temp = new Object[capacity];
-        for (int i = 0; i < stack.length; i++) {
+        for (int i = 0; i < size; i++) {
             temp[i] = stack[i];
         }
         stack = temp;
