@@ -2,12 +2,12 @@ package lesson_3;
 
 public class ReversString {
     public static void main(String[] args) {
-        System.out.println(reverce("Hello my darling world!"));
-        System.out.println(reverceWord("Hello my darling world!"));
+        System.out.println(revers("Hello my darling world!"));
+        System.out.println(reversWord("Hello my darling world!"));
     }
 
 
-    public static String reverce(String str){
+    public static String revers(String str){
         MyStack<Character> stack = new MyStack<>();
         char[] chars = str.toCharArray();
 
@@ -15,14 +15,14 @@ public class ReversString {
             stack.push(chars[i]);
         }
 
-        String reverceString = "";
+        String reversString = "";
         while (!stack.isEmpty()) {
-            reverceString += stack.pop().toString();
+            reversString += stack.pop().toString();
         }
-        return reverceString;
+        return reversString;
     }
 
-    public static String reverceWord(String str){
+    public static String reversWord(String str){
         MyStack<String> stack = new MyStack<>();
         String[] words = str.split(" ");
 
@@ -30,10 +30,10 @@ public class ReversString {
             stack.push(words[i]);
         }
 
-        String reverceString = "";
+        String reversString = "";
         while (!stack.isEmpty()) {
-            reverceString += stack.pop() + " ";
+            reversString += stack.pop() + " ";
         }
-        return reverceString;
+        return reversString;
     }
 }

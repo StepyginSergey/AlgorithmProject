@@ -8,6 +8,8 @@ import java.util.Stack;
 */
 public class Main {
     public static void main(String[] args) {
+
+        System.out.println("========================== Stack ===============================");
         Stack<Character> stack = new Stack<>();
 
         MyStack<Integer> myStack = new MyStack();
@@ -50,8 +52,16 @@ public class Main {
 
         System.out.println(queue.peekFront());
 
-        //--------------------------- Deque ----------------------------
+        System.out.println("========================== Deque ===============================");
+        MyDeque<Integer> deq = new MyDeque<>();
 
+        System.out.println("size: " + deq.getSize());
 
+        deq.insetLeft(1);
+        deq.insetLeft(2);
+
+        System.out.println("size: " + deq.getSize());
+
+        System.out.println("deq: " + deq.toString());
     }
 }
