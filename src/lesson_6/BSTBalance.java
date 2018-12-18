@@ -2,26 +2,39 @@ package lesson_6;
 
 import java.util.NoSuchElementException;
 
-public class BST<Key extends Comparable<Key>, Value> {
+public class BSTBalance<Key extends Comparable<Key>, Value> {
     private class Node {
         Key key;
         Value value;
         Node left;
         Node right;
-        int size; //РєРѕР»-РІРѕ СѓР·Р»РѕРІ РІ РґРµСЂРµРІРµ, РєРѕСЂРЅРµРј РєРѕС‚РѕСЂРѕРіРѕ СЏРІР»СЏРµС‚СЃСЏ РґР°РЅРЅС‹Р№ СѓР·РµР»
-        int height;
-        public Node(Key key, Value value, int size) {
+        int size; //кол-во узлов в дереве, корнем которого является узел Node
+        private int height = 0;
+        public Node(Key key, Value value, int size, int height) {
             this.key = key;
             this.value = value;
             this.size = size;
+            this.height = height;
         }
     }
 
-    private Node root = null;
+    private Node root;
 
-    public boolean isEmpty() { return root == null; }
+    public boolean isEmpty() {
+        return root == null;
+    }
+
     public int size() {
         return this.size(root);
+    }
+
+    public int hight() { return height(root); }
+
+    private int height(Node node) {
+        if(node == null) {
+            return 0;
+        }
+        else return node.height;
     }
 
     private int size(Node node) {
@@ -33,13 +46,26 @@ public class BST<Key extends Comparable<Key>, Value> {
         }
     }
 
-    public Value get(Key key) { //a[key]
+    public boolean isBalanced() {
+        return isBalanced(root);
+    }
+
+    private boolean isBalanced(Node node) {
+        if (node == null) {
+            return true;
+        }
+        return Math.abs(height(node.left) - height(node.right)) < 2 &&
+                isBalanced(node.left) &&
+                isBalanced(node.right);
+    }
+
+    public Value get(Key key) {
         return get(root, key);
     }
 
     private Value get(Node node, Key key) {
         if (key == null) {
-            throw new IllegalArgumentException("РќРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РєР»СЋС‡Р° СЃРѕ Р·РЅР°С‡РµРЅРёРµРј Null");
+            throw new IllegalArgumentException("Не может быть ключа со значением Null");
         }
         if (node == null) {
             return null;
@@ -51,18 +77,25 @@ public class BST<Key extends Comparable<Key>, Value> {
         else if (cmp < 0) {
             return get(node.left, key);
         }
-        else { //cmp > 0
-            return get(node.right,  key);
+        else {
+            return  get(node.right, key);
         }
     }
 
-    public boolean contains(Key key) {
-        return get(root, key) != null;
+    public void put(Key key, Value value) {
+        if (key == null) {
+            throw new IllegalArgumentException("Не может быть ключа со значением Null");
+        }
+        if (value == null) {
+            delete(key);
+            return;
+        }
+        root = put(root, key, value);
     }
 
-    private Node put(Node node, Key key, Value value) { //a[key] = value;
+    private Node put(Node node, Key key, Value value) {
         if (node == null) {
-            return new Node(key, value, 1);
+            return new Node(key, value, 1, 0);
         }
 
         int cmp = key.compareTo(node.key);
@@ -77,14 +110,12 @@ public class BST<Key extends Comparable<Key>, Value> {
         }
 
         node.size = size(node.left) + size(node.right) + 1;
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
         return node;
     }
 
-    public void put(Key key, Value value) {
-        if (key == null) {
-            throw new IllegalArgumentException("РќРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РєР»СЋС‡Р° СЃРѕ Р·РЅР°С‡РµРЅРёРµРј Null");
-        }
-        root = put(root, key, value);
+    public boolean contains(Key key) {
+        return get(key) != null;
     }
 
     private Node min(Node node) {
@@ -98,7 +129,7 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     private Node max(Node node) {
         if (node.right == null) {
-            return node;
+            return  node;
         }
         else {
             return max(node.right);
@@ -110,6 +141,8 @@ public class BST<Key extends Comparable<Key>, Value> {
             return node.right;
         }
         node.left = deleteMin(node.left);
+        node.size = size(node.left) + size(node.right) + 1;
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
         return node;
     }
 
@@ -124,7 +157,9 @@ public class BST<Key extends Comparable<Key>, Value> {
         if (node.right == null) {
             return node.left;
         }
-        node.right = deleteMax(node.right);
+        node.right = deleteMin(node.right);
+        node.size = size(node.left) + size(node.right) + 1;
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
         return node;
     }
 
@@ -137,8 +172,9 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     private Node delete(Node node, Key key) {
         if (node == null) {
-            return null;
+            return  null;
         }
+
         int cmp = key.compareTo(node.key);
         if (cmp < 0) {
             node.left = delete(node.left, key);
@@ -155,17 +191,16 @@ public class BST<Key extends Comparable<Key>, Value> {
             }
 
             Node tmp = node;
-            //node = min(node.right);
             node = max(node.left);
-            //node.right = deleteMin(tmp.right);
             node.left = deleteMax(tmp.left);
-            //node.left = tmp.left;
             node.right = tmp.right;
-            tmp = null;
         }
         node.size = size(node.left) + size(node.right) + 1;
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
         return node;
     }
 
-    public void delete(Key key) { root = delete(root, key); }
+    public void delete(Key key) {
+        root = delete(root, key);
+    }
 }
