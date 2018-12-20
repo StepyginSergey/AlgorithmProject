@@ -6,6 +6,9 @@ public class LinearProbingHashTable<Key, Value> {
     private Object[] keys = new Object[M];
     private Object[] values = new Object[M];
 
+    private Object[] tmpKeys;
+    private Object[] tmpValues;
+
     public int size() {return size;}
 
     public boolean isEmpty() {return size == 0;}
@@ -36,7 +39,7 @@ public class LinearProbingHashTable<Key, Value> {
         }
         int i;
         for (i = hash(key); keys != null; i = (i + 1) % M) {
-
+            //здесь потребовалось добавить проверку на null иначе позникала ошибка
             if(keys[i] == null){
                 break;
             }else if (((Key)keys[i]).equals(key)) {
@@ -57,18 +60,50 @@ public class LinearProbingHashTable<Key, Value> {
             newSize += 1;
         }
 
-        Object[] tmpKeys = keys;
-        Object[] tmpValues = values;
+        tmpKeys = keys;
+        tmpValues = values;
 
         keys = new Object[newSize];
         values = new Object[newSize];
 
         for(int i = 0; i< M; i++){
             if((Key) tmpKeys[i] != null) {
-                put((Key) tmpKeys[i], get((Key) tmpKeys[i]));
+                putV((Key) tmpKeys[i], getV((Key) tmpKeys[i]));
             }
         }
 
         M = newSize;
+        tmpKeys = null;
+        tmpValues = null;
+    }
+
+    private Value getV(Key key) {
+        if (key == null) {
+            throw new IllegalArgumentException("Аргумент не может быть null");
+        }
+        for (int i = hash(key); tmpKeys[i] != null; i = (i + 1) % M) {
+            if (((Key)tmpKeys[i]).equals(key)) {
+                return (Value) tmpValues[i];
+            }
+        }
+        return null;
+    }
+
+    public void putV(Key key, Value value) {
+        if (key == null) {
+            throw new IllegalArgumentException("Аргумент не может быть null");
+        }
+        int i;
+        for (i = hash(key); keys != null; i = (i + 1) % M) {
+
+            if(keys[i] == null){
+                break;
+            }else if (((Key)keys[i]).equals(key)) {
+                values[i] = value;
+                return;
+            }
+        }
+        keys[i] = key;
+        values[i] = value;
     }
 }

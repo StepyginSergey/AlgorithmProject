@@ -20,7 +20,7 @@ public class Main {
 
 
         for(int i = 0; i<150; i++){
-            liner.put(i , tmp *= 2);
+            liner.put(i , tmp += 2);
         }
 
         System.out.println("Размер списка: " + liner.size());
