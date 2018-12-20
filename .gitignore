@@ -5,10 +5,6 @@
 /AlgorithmProject.iml
 /ProjectAL.iml
 /.idea/uiDesigner.xml
-/.class
-/out/production/AlgorithmProject/A.class
-/out/production/AlgorithmProject/B.class
-/out/production/AlgorithmProject/Test.class
 /out/production/AlgorithmProject/lesson_2/Main.class
 /out/production/AlgorithmProject/lesson_2/MyArrayList.class
 /out/production/AlgorithmProject/lesson_2/MySortedArrayList.class
@@ -23,6 +19,10 @@
 /out/production/AlgorithmProject/lesson_4/MyLinkedList$MyLinkedListIterator.class
 /out/production/AlgorithmProject/lesson_4/MyLinkedList$Node.class
 /out/production/AlgorithmProject/lesson_4/MyLinkedList.class
+/out/production/AlgorithmProject/lesson_4/MyLinkedQueue.class
+/out/production/AlgorithmProject/lesson_4/MyLinkedStack.class
+/out/production/AlgorithmProject/lesson_4/Program.class
+/out/production/AlgorithmProject/Test.class
 /out/production/AlgorithmProject/lesson_4/MyLinkedQueue.class
 /out/production/AlgorithmProject/lesson_4/MyLinkedStack.class
 /out/production/AlgorithmProject/lesson_4/Program.class
