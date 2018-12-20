@@ -39,3 +39,10 @@
 /out/production/AlgorithmProject/lesson_7/DepthFirstPaths.class
 /out/production/AlgorithmProject/lesson_7/Graph.class
 /out/production/AlgorithmProject/lesson_7/Program.class
+/.gitignore.orig
+/out/production/AlgorithmProject/lesson_6/Main.class
+/out/production/AlgorithmProject/lesson_7/Main.class
+/out/production/AlgorithmProject/lesson_8/ChainingHashTable$Node.class
+/out/production/AlgorithmProject/lesson_8/ChainingHashTable.class
+/out/production/AlgorithmProject/lesson_8/LinearProbingHashTable.class
+/out/production/AlgorithmProject/lesson_8/Main.class
